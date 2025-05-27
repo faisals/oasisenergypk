@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oasis Energy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #0a0a0a;
+        }
+
+        .carousel-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .carousel-item.active {
+            opacity: 1;
+        }
+
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            animation: kenburns 20s ease-out infinite;
+        }
+
+        .carousel-item:nth-child(1)::before { background-image: url('imgs/carousel-01.jpeg'); }
+        .carousel-item:nth-child(2)::before { background-image: url('imgs/carousel-02.jpeg'); animation-name: kenburns2; }
+        .carousel-item:nth-child(3)::before { background-image: url('imgs/carousel-03.jpeg'); animation-name: kenburns3; }
+        .carousel-item:nth-child(4)::before { background-image: url('imgs/carousel-04.jpeg'); animation-name: kenburns4; }
+        .carousel-item:nth-child(5)::before { background-image: url('imgs/carousel-05.jpeg'); animation-name: kenburns5; }
+
+        @keyframes kenburns {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.2) translate(-2%, -2%); }
+        }
+
+        @keyframes kenburns2 {
+            0% { transform: scale(1.2) translate(-2%, -2%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+
+        @keyframes kenburns3 {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.2) translate(2%, -2%); }
+        }
+
+        @keyframes kenburns4 {
+            0% { transform: scale(1.2) translate(2%, 2%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+
+        @keyframes kenburns5 {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.2) translate(-2%, 2%); }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 300;
+            letter-spacing: 0.2rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 200;
+            letter-spacing: 0.1rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="overlay">
+            <h1 class="logo">OASIS ENERGY</h1>
+            <p class="tagline">Coming Soon</p>
+        </div>
+        
+        <div class="carousel">
+            <div class="carousel-inner" id="carouselInner">
+                <div class="carousel-item active"></div>
+                <div class="carousel-item"></div>
+                <div class="carousel-item"></div>
+                <div class="carousel-item"></div>
+                <div class="carousel-item"></div>
+            </div>
+            
+            <div class="indicators" id="indicators">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+                <span class="indicator" data-slide="3"></span>
+                <span class="indicator" data-slide="4"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const items = document.querySelectorAll('.carousel-item');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentSlide = 0;
+        const totalSlides = items.length;
+        let autoPlayInterval;
+
+        function goToSlide(slideIndex) {
+            items[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            
+            currentSlide = slideIndex;
+            
+            items[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % totalSlides;
+            goToSlide(nextIndex);
+        }
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                stopAutoPlay();
+                goToSlide(index);
+                startAutoPlay();
+            });
+        });
+
+        // Start automatic carousel
+        startAutoPlay();
+
+        // Pause on hover
+        const carousel = document.querySelector('.carousel');
+        carousel.addEventListener('mouseenter', stopAutoPlay);
+        carousel.addEventListener('mouseleave', startAutoPlay);
+    </script>
+</body>
+</html>
