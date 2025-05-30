@@ -137,7 +137,8 @@ function updateStepIndicators(step) {
         
         const circle = indicator.querySelector('div');
         const text = indicator.querySelector('span');
-        const progressLine = document.getElementById(`progress-${i}-${i+1}`);
+        // Only look for progress line if not the last step
+        const progressLine = i < totalSteps ? document.getElementById(`progress-${i}-${i+1}`) : null;
         
         if (i < step) {
             // Completed step
