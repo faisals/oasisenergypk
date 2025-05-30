@@ -605,12 +605,12 @@
                             </div>
                         </fieldset>
                         
-                        <!-- reCAPTCHA -->
-                        <div class="flex justify-center">
+                        <!-- Hidden reCAPTCHA (will show on form submission) -->
+                        <div id="recaptcha-container" class="hidden flex justify-center">
                             <div data-netlify-recaptcha="true"></div>
                         </div>
                         
-                        <button type="submit" class="w-full bg-oasis-green text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition">
+                        <button type="submit" id="submit-btn" class="w-full bg-oasis-green text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition">
                             Get Free Solar Quote
                         </button>
                     </form>

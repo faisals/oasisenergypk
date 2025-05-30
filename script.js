@@ -170,12 +170,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Form submission handler
+// Form submission handler with reCAPTCHA
 const contactForm = document.querySelector('#contact form[name="solar-quote"]');
 if (contactForm) {
+    let recaptchaShown = false;
+    
     contactForm.addEventListener('submit', function(e) {
-        // Netlify will handle the actual submission
-        const submitBtn = this.querySelector('button[type="submit"]');
+        const recaptchaContainer = document.getElementById('recaptcha-container');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        // If reCAPTCHA hasn't been shown yet, show it and prevent submission
+        if (!recaptchaShown && recaptchaContainer) {
+            e.preventDefault();
+            recaptchaContainer.classList.remove('hidden');
+            recaptchaShown = true;
+            submitBtn.textContent = 'Complete Verification to Submit';
+            
+            // Scroll to reCAPTCHA for visibility
+            recaptchaContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        
+        // Normal submission flow after reCAPTCHA is completed
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Submitting...';
         submitBtn.disabled = true;
