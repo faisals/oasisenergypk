@@ -259,11 +259,17 @@ function updateStepIndicators(step) {
 }
 
 function showStep(step) {
-    // Hide all steps
+    // Hide all steps and disable their required fields
     for (let i = 1; i <= totalSteps; i++) {
         const stepElement = document.getElementById(`step-${i}`);
         if (stepElement) {
             stepElement.classList.add('hidden');
+            // Disable required validation for hidden steps
+            const requiredFields = stepElement.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                field.removeAttribute('required');
+                field.setAttribute('data-was-required', 'true');
+            });
         } else {
             console.warn(`Step element step-${i} not found`);
         }
@@ -273,6 +279,12 @@ function showStep(step) {
     const currentStepElement = document.getElementById(`step-${step}`);
     if (currentStepElement) {
         currentStepElement.classList.remove('hidden');
+        
+        // Enable required validation for visible step
+        const requiredFields = currentStepElement.querySelectorAll('[data-was-required="true"]');
+        requiredFields.forEach(field => {
+            field.setAttribute('required', '');
+        });
         
         // Update indicators
         updateStepIndicators(step);
@@ -315,10 +327,12 @@ function validateStep(step) {
             
             if (!fullName || fullName.trim() === '') {
                 alert('Please enter your full name');
+                document.querySelector('input[name="full-name"]').focus();
                 return false;
             }
             if (!phone || phone.trim() === '') {
                 alert('Please enter your phone number');
+                document.querySelector('input[name="phone"]').focus();
                 return false;
             }
             return true;
@@ -382,6 +396,12 @@ if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         const recaptchaContainer = document.getElementById('recaptcha-container');
         const submitBtn = document.getElementById('submit-btn');
+        
+        // Validate Step 3 (Contact) fields first
+        if (!validateStep(3)) {
+            e.preventDefault();
+            return;
+        }
         
         // If reCAPTCHA hasn't been shown yet, show it and prevent submission
         if (!recaptchaShown && recaptchaContainer) {
