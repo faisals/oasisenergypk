@@ -137,6 +137,10 @@ function updateStepIndicators(step) {
         
         const circle = indicator.querySelector('div');
         const text = indicator.querySelector('span');
+        
+        // Guard against missing elements
+        if (!circle || !text) continue;
+        
         // Only look for progress line if not the last step
         const progressLine = i < totalSteps ? document.getElementById(`progress-${i}-${i+1}`) : null;
         
@@ -166,24 +170,32 @@ function updateStepIndicators(step) {
 }
 
 function showStep(step) {
-    // Hide all steps
-    for (let i = 1; i <= totalSteps; i++) {
-        const stepElement = document.getElementById(`step-${i}`);
-        if (stepElement) {
-            stepElement.classList.add('hidden');
+    try {
+        // Hide all steps
+        for (let i = 1; i <= totalSteps; i++) {
+            const stepElement = document.getElementById(`step-${i}`);
+            if (stepElement) {
+                stepElement.classList.add('hidden');
+            }
         }
-    }
-    
-    // Show current step
-    const currentStepElement = document.getElementById(`step-${step}`);
-    if (currentStepElement) {
-        currentStepElement.classList.remove('hidden');
         
-        // Update indicators
-        updateStepIndicators(step);
-        
-        // Scroll to top of form
-        currentStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Show current step
+        const currentStepElement = document.getElementById(`step-${step}`);
+        if (currentStepElement) {
+            currentStepElement.classList.remove('hidden');
+            
+            // Update indicators
+            updateStepIndicators(step);
+            
+            // Delay scroll slightly to ensure element is visible
+            setTimeout(() => {
+                currentStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        } else {
+            console.error(`Step element not found: step-${step}`);
+        }
+    } catch (error) {
+        console.error('Error in showStep:', error);
     }
 }
 
@@ -424,7 +436,9 @@ function initializeFormSubmission() {
                 e.preventDefault();
                 recaptchaContainer.classList.remove('hidden');
                 recaptchaShown = true;
-                submitBtn.textContent = 'Complete Verification to Submit';
+                if (submitBtn) {
+                    submitBtn.textContent = 'Complete Verification to Submit';
+                }
                 
                 // Scroll to reCAPTCHA for visibility
                 recaptchaContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -432,15 +446,17 @@ function initializeFormSubmission() {
             }
             
             // Normal submission flow after reCAPTCHA is completed
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Submitting...';
-            submitBtn.disabled = true;
-            
-            // Re-enable after a short delay in case submission fails
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 5000);
+            if (submitBtn) {
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+                
+                // Re-enable after a short delay in case submission fails
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 5000);
+            }
         });
     }
 }
