@@ -39,6 +39,11 @@
             opacity: 0;
             display: none;
         }
+        /* Explicitly set visibility when not hidden */
+        .step-content:not(.hidden) {
+            opacity: 1;
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800">

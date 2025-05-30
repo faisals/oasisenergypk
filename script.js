@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Multi-step form wizard functions
 let currentStep = 1;
 const totalSteps = 3;
+const enableScrollOnStepChange = true; // Set to false to debug scrolling issues
 
 function initializeFormWizard() {
     // Show step 1 by default
@@ -187,10 +188,16 @@ function showStep(step) {
             // Update indicators
             updateStepIndicators(step);
             
-            // Delay scroll slightly to ensure element is visible
-            setTimeout(() => {
-                currentStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
+            // Scroll to form container instead of step element to avoid positioning issues
+            // Only scroll on step changes after the first step
+            if (enableScrollOnStepChange && step > 1) {
+                setTimeout(() => {
+                    const formContainer = document.querySelector('#contact .bg-white.rounded-xl');
+                    if (formContainer) {
+                        formContainer.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+                    }
+                }, 100);
+            }
         } else {
             console.error(`Step element not found: step-${step}`);
         }
