@@ -86,6 +86,88 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // Auto-detect location functionality
+    const locationBtn = document.getElementById('location-btn');
+    const mapsInput = document.getElementById('maps-input');
+    const locationBtnText = document.getElementById('location-btn-text');
+    
+    if (locationBtn && mapsInput && locationBtnText) {
+        locationBtn.addEventListener('click', function() {
+            // Check if geolocation is supported
+            if (!navigator.geolocation) {
+                locationBtnText.textContent = 'Not supported';
+                setTimeout(() => locationBtnText.textContent = 'Use My Location', 2000);
+                return;
+            }
+            
+            // Show loading state
+            locationBtnText.textContent = 'Getting location...';
+            locationBtn.disabled = true;
+            
+            // Get current position
+            navigator.geolocation.getCurrentPosition(
+                // Success callback
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+                    
+                    // Create Google Maps URL with coordinates
+                    const mapsUrl = `https://maps.google.com/?q=${lat},${lng}`;
+                    
+                    // Fill the input field
+                    mapsInput.value = mapsUrl;
+                    
+                    // Show success state
+                    locationBtnText.textContent = '✅ Location Added';
+                    
+                    // Show accuracy info if not very accurate
+                    if (accuracy > 100) {
+                        setTimeout(() => {
+                            locationBtnText.textContent = `±${Math.round(accuracy)}m accuracy`;
+                        }, 1500);
+                    }
+                    
+                    // Reset button after delay
+                    setTimeout(() => {
+                        locationBtnText.textContent = 'Use My Location';
+                        locationBtn.disabled = false;
+                    }, 3000);
+                },
+                // Error callback
+                function(error) {
+                    let errorMessage = 'Location unavailable';
+                    
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = 'Permission denied';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = 'Location unavailable';
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = 'Request timeout';
+                            break;
+                    }
+                    
+                    locationBtnText.textContent = errorMessage;
+                    
+                    // Reset button after delay
+                    setTimeout(() => {
+                        locationBtnText.textContent = 'Use My Location';
+                        locationBtn.disabled = false;
+                    }, 2000);
+                },
+                // Options
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 300000 // 5 minutes cache
+                }
+            );
+        });
+    }
 });
 
 // Form submission handler
