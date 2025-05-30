@@ -412,6 +412,7 @@
                     </div>
 
                     <form class="space-y-8" name="solar-quote" method="POST" action="/thank-you.html" data-netlify="true" data-netlify-recaptcha="true">
+                        <input type="hidden" name="form-name" value="solar-quote">
                         
                         <!-- Step 1: Usage (Electricity Profile) -->
                         <div id="step-1" class="step-content">
@@ -662,10 +663,7 @@
                             </div>
                             </div>
                             
-                            <!-- Hidden reCAPTCHA (will show on form submission) -->
-                            <div id="recaptcha-container" class="hidden flex justify-center pt-6">
-                                <div data-netlify-recaptcha="true"></div>
-                            </div>
+                            <!-- reCAPTCHA will be auto-injected by Netlify via data-netlify-recaptcha="true" attribute -->
                             
                             <div class="flex justify-between pt-6">
                                 <button type="button" id="back-to-step-2" class="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition">
