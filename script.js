@@ -36,49 +36,220 @@ function setRandomHeadline() {
             <span class="text-oasis-green">${randomHeadline.highlight}</span> 
             ${randomHeadline.suffix}
         `;
-    } else {
-        console.warn('Hero headline element not found');
     }
 }
 
-// Set random headline when DOM is ready
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    // Set random headline
     setRandomHeadline();
-});
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-// Mobile menu toggle
-const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
 
-mobileMenuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-});
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Close mobile menu if open
-            mobileMenu.classList.add('hidden');
-        }
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Close mobile menu if open
+                if (mobileMenu) {
+                    mobileMenu.classList.add('hidden');
+                }
+            }
+        });
     });
+
+    // Multi-step form wizard (only if on the page with the form)
+    const contactForm = document.querySelector('#contact form[name="solar-quote"]');
+    if (contactForm) {
+        initializeFormWizard();
+        initializeSteppers();
+        initializePhoneInput();
+        initializeLocationButton();
+        initializeFormSubmission();
+    }
 });
+
+// Multi-step form wizard functions
+let currentStep = 1;
+const totalSteps = 3;
+
+function initializeFormWizard() {
+    // Show step 1 by default
+    showStep(1);
+    
+    // Next to step 2
+    const nextToStep2 = document.getElementById('next-to-step-2');
+    if (nextToStep2) {
+        nextToStep2.addEventListener('click', function() {
+            if (validateStep(1)) {
+                currentStep = 2;
+                showStep(currentStep);
+            }
+        });
+    }
+    
+    // Next to step 3
+    const nextToStep3 = document.getElementById('next-to-step-3');
+    if (nextToStep3) {
+        nextToStep3.addEventListener('click', function() {
+            if (validateStep(2)) {
+                currentStep = 3;
+                showStep(currentStep);
+            }
+        });
+    }
+    
+    // Back to step 1
+    const backToStep1 = document.getElementById('back-to-step-1');
+    if (backToStep1) {
+        backToStep1.addEventListener('click', function() {
+            currentStep = 1;
+            showStep(currentStep);
+        });
+    }
+    
+    // Back to step 2
+    const backToStep2 = document.getElementById('back-to-step-2');
+    if (backToStep2) {
+        backToStep2.addEventListener('click', function() {
+            currentStep = 2;
+            showStep(currentStep);
+        });
+    }
+}
+
+function updateStepIndicators(step) {
+    // Update step indicators
+    for (let i = 1; i <= totalSteps; i++) {
+        const indicator = document.getElementById(`step-${i}-indicator`);
+        if (!indicator) continue;
+        
+        const circle = indicator.querySelector('div');
+        const text = indicator.querySelector('span');
+        const progressLine = document.getElementById(`progress-${i}-${i+1}`);
+        
+        if (i < step) {
+            // Completed step
+            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-oasis-green text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
+            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-oasis-green';
+            if (progressLine) progressLine.className = 'w-8 sm:w-12 h-0.5 bg-oasis-green';
+        } else if (i === step) {
+            // Current step
+            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-oasis-blue text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
+            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-oasis-blue';
+        } else {
+            // Future step
+            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
+            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-gray-500';
+            if (progressLine) progressLine.className = 'w-8 sm:w-12 h-0.5 bg-gray-300';
+        }
+    }
+    
+    // Update progress bar
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+        const progressPercentage = (step / totalSteps) * 100;
+        progressBar.style.width = `${progressPercentage}%`;
+    }
+}
+
+function showStep(step) {
+    // Hide all steps
+    for (let i = 1; i <= totalSteps; i++) {
+        const stepElement = document.getElementById(`step-${i}`);
+        if (stepElement) {
+            stepElement.classList.add('hidden');
+        }
+    }
+    
+    // Show current step
+    const currentStepElement = document.getElementById(`step-${step}`);
+    if (currentStepElement) {
+        currentStepElement.classList.remove('hidden');
+        
+        // Update indicators
+        updateStepIndicators(step);
+        
+        // Scroll to top of form
+        currentStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function validateStep(step) {
+    switch(step) {
+        case 1:
+            const meterType = document.querySelector('input[name="meter-type"]:checked');
+            const avgBillInput = document.querySelector('input[name="avg-bill"]');
+            const avgUnitsInput = document.querySelector('input[name="avg-units"]');
+            
+            if (!meterType) {
+                alert('Please select your meter type');
+                return false;
+            }
+            if (!avgBillInput || !avgBillInput.value || parseFloat(avgBillInput.value) <= 0) {
+                alert('Please enter your average electricity bill');
+                return false;
+            }
+            if (!avgUnitsInput || !avgUnitsInput.value || parseFloat(avgUnitsInput.value) <= 0) {
+                alert('Please enter your average electricity units');
+                return false;
+            }
+            return true;
+            
+        case 2:
+            // Step 2 is optional - appliance count
+            return true;
+            
+        case 3:
+            const fullNameInput = document.querySelector('input[name="full-name"]');
+            const phoneInput = document.querySelector('input[name="phone"]');
+            
+            if (!fullNameInput || !fullNameInput.value || fullNameInput.value.trim() === '') {
+                alert('Please enter your full name');
+                return false;
+            }
+            if (!phoneInput || !phoneInput.value || phoneInput.value.trim() === '') {
+                alert('Please enter your phone number');
+                return false;
+            }
+            // Basic phone validation - more flexible pattern
+            const phoneValue = phoneInput.value.replace(/\D/g, ''); // Remove all non-digits
+            if (!phoneValue.startsWith('03') || phoneValue.length !== 11) {
+                alert('Please enter a valid Pakistani mobile number (03xx-xxxxxxx)');
+                return false;
+            }
+            return true;
+            
+        default:
+            return true;
+    }
+}
 
 // Stepper controls for appliance counts
-document.addEventListener('DOMContentLoaded', function() {
+function initializeSteppers() {
     // Handle stepper buttons
     document.querySelectorAll('.stepper-btn-plus').forEach(btn => {
         btn.addEventListener('click', function() {
             const inputName = this.getAttribute('data-input');
             const input = document.querySelector(`input[name="${inputName}"]`);
-            const currentValue = parseInt(input.value) || 0;
-            const maxValue = parseInt(input.getAttribute('max')) || 100;
-            
-            if (currentValue < maxValue) {
-                input.value = currentValue + 1;
+            if (input) {
+                const currentValue = parseInt(input.value) || 0;
+                const maxValue = parseInt(input.getAttribute('max')) || 100;
+                
+                if (currentValue < maxValue) {
+                    input.value = currentValue + 1;
+                }
             }
         });
     });
@@ -87,16 +258,20 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', function() {
             const inputName = this.getAttribute('data-input');
             const input = document.querySelector(`input[name="${inputName}"]`);
-            const currentValue = parseInt(input.value) || 0;
-            const minValue = parseInt(input.getAttribute('min')) || 0;
-            
-            if (currentValue > minValue) {
-                input.value = currentValue - 1;
+            if (input) {
+                const currentValue = parseInt(input.value) || 0;
+                const minValue = parseInt(input.getAttribute('min')) || 0;
+                
+                if (currentValue > minValue) {
+                    input.value = currentValue - 1;
+                }
             }
         });
     });
-    
-    // Phone number formatting
+}
+
+// Phone number formatting
+function initializePhoneInput() {
     const phoneInput = document.getElementById('phone-input');
     if (phoneInput) {
         phoneInput.addEventListener('input', function(e) {
@@ -134,8 +309,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
-    // Auto-detect location functionality
+}
+
+// Auto-detect location functionality
+function initializeLocationButton() {
     const locationBtn = document.getElementById('location-btn');
     const mapsInput = document.getElementById('maps-input');
     const locationBtnText = document.getElementById('location-btn-text');
@@ -145,6 +322,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check if geolocation is supported
             if (!navigator.geolocation) {
                 locationBtnText.textContent = 'Not supported';
+                setTimeout(() => locationBtnText.textContent = 'Use My Location', 2000);
+                return;
+            }
+            
+            // Check if we're on HTTPS (required for geolocation in many browsers)
+            if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+                locationBtnText.textContent = 'HTTPS required';
                 setTimeout(() => locationBtnText.textContent = 'Use My Location', 2000);
                 return;
             }
@@ -216,199 +400,46 @@ document.addEventListener('DOMContentLoaded', function() {
             );
         });
     }
-});
-
-// Multi-step form wizard
-let currentStep = 1;
-const totalSteps = 3;
-
-function updateStepIndicators(step) {
-    // Update step indicators
-    for (let i = 1; i <= totalSteps; i++) {
-        const indicator = document.getElementById(`step-${i}-indicator`);
-        if (!indicator) {
-            console.warn(`Step indicator step-${i}-indicator not found`);
-            continue;
-        }
-        
-        const circle = indicator.querySelector('div');
-        const text = indicator.querySelector('span');
-        const progressLine = document.getElementById(`progress-${i}-${i+1}`);
-        
-        if (i < step) {
-            // Completed step
-            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-oasis-green text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
-            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-oasis-green';
-            if (progressLine) progressLine.className = 'w-8 sm:w-12 h-0.5 bg-oasis-green';
-        } else if (i === step) {
-            // Current step
-            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-oasis-blue text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
-            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-oasis-blue';
-        } else {
-            // Future step
-            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
-            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-gray-500';
-            if (progressLine) progressLine.className = 'w-8 sm:w-12 h-0.5 bg-gray-300';
-        }
-    }
-    
-    // Update progress bar
-    const progressBar = document.getElementById('progress-bar');
-    const progressPercentage = (step / totalSteps) * 100;
-    progressBar.style.width = `${progressPercentage}%`;
 }
 
-function showStep(step) {
-    // Hide all steps and disable their required fields
-    for (let i = 1; i <= totalSteps; i++) {
-        const stepElement = document.getElementById(`step-${i}`);
-        if (stepElement) {
-            stepElement.classList.add('hidden');
-            // Disable required validation for hidden steps
-            const requiredFields = stepElement.querySelectorAll('[required]');
-            requiredFields.forEach(field => {
-                field.removeAttribute('required');
-                field.setAttribute('data-was-required', 'true');
-            });
-        } else {
-            console.warn(`Step element step-${i} not found`);
-        }
-    }
-    
-    // Show current step
-    const currentStepElement = document.getElementById(`step-${step}`);
-    if (currentStepElement) {
-        currentStepElement.classList.remove('hidden');
+// Form submission handler with reCAPTCHA
+function initializeFormSubmission() {
+    const contactForm = document.querySelector('#contact form[name="solar-quote"]');
+    if (contactForm) {
+        let recaptchaShown = false;
         
-        // Enable required validation for visible step
-        const requiredFields = currentStepElement.querySelectorAll('[data-was-required="true"]');
-        requiredFields.forEach(field => {
-            field.setAttribute('required', '');
-        });
-        
-        // Update indicators
-        updateStepIndicators(step);
-        
-        // Scroll to top of form
-        currentStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-        console.error(`Current step element step-${step} not found`);
-    }
-}
-
-function validateStep(step) {
-    switch(step) {
-        case 1:
-            const meterType = document.querySelector('input[name="meter-type"]:checked');
-            const avgBill = document.querySelector('input[name="avg-bill"]').value;
-            const avgUnits = document.querySelector('input[name="avg-units"]').value;
+        contactForm.addEventListener('submit', function(e) {
+            const recaptchaContainer = document.getElementById('recaptcha-container');
+            const submitBtn = document.getElementById('submit-btn');
             
-            if (!meterType) {
-                alert('Please select your meter type');
-                return false;
+            // Validate current step before submission
+            if (!validateStep(3)) {
+                e.preventDefault();
+                return;
             }
-            if (!avgBill || avgBill <= 0) {
-                alert('Please enter your average electricity bill');
-                return false;
-            }
-            if (!avgUnits || avgUnits <= 0) {
-                alert('Please enter your average electricity units');
-                return false;
-            }
-            return true;
             
-        case 2:
-            // Step 2 is optional - appliance count
-            return true;
-            
-        case 3:
-            const fullName = document.querySelector('input[name="full-name"]').value;
-            const phone = document.querySelector('input[name="phone"]').value;
-            
-            if (!fullName || fullName.trim() === '') {
-                alert('Please enter your full name');
-                document.querySelector('input[name="full-name"]').focus();
-                return false;
+            // If reCAPTCHA hasn't been shown yet, show it and prevent submission
+            if (!recaptchaShown && recaptchaContainer) {
+                e.preventDefault();
+                recaptchaContainer.classList.remove('hidden');
+                recaptchaShown = true;
+                submitBtn.textContent = 'Complete Verification to Submit';
+                
+                // Scroll to reCAPTCHA for visibility
+                recaptchaContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
             }
-            if (!phone || phone.trim() === '') {
-                alert('Please enter your phone number');
-                document.querySelector('input[name="phone"]').focus();
-                return false;
-            }
-            return true;
             
-        default:
-            return true;
-    }
-}
-
-// Navigation handlers
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize wizard - show step 1 by default
-    showStep(1);
-    
-    // Next to step 2
-    const nextToStep2 = document.getElementById('next-to-step-2');
-    if (nextToStep2) {
-        nextToStep2.addEventListener('click', function() {
-            if (validateStep(1)) {
-                currentStep = 2;
-                showStep(currentStep);
-            }
+            // Normal submission flow after reCAPTCHA is completed
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+            
+            // Re-enable after a short delay in case submission fails
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 5000);
         });
     }
-    
-    // Next to step 3
-    const nextToStep3 = document.getElementById('next-to-step-3');
-    if (nextToStep3) {
-        nextToStep3.addEventListener('click', function() {
-            if (validateStep(2)) {
-                currentStep = 3;
-                showStep(currentStep);
-            }
-        });
-    }
-    
-    // Back to step 1
-    const backToStep1 = document.getElementById('back-to-step-1');
-    if (backToStep1) {
-        backToStep1.addEventListener('click', function() {
-            currentStep = 1;
-            showStep(currentStep);
-        });
-    }
-    
-    // Back to step 2
-    const backToStep2 = document.getElementById('back-to-step-2');
-    if (backToStep2) {
-        backToStep2.addEventListener('click', function() {
-            currentStep = 2;
-            showStep(currentStep);
-        });
-    }
-});
-
-// Form submission handler
-const contactForm = document.querySelector('#contact form[name="solar-quote"]');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        const submitBtn = document.getElementById('submit-btn');
-        
-        // Validate Step 3 (Contact) fields first
-        if (!validateStep(3)) {
-            e.preventDefault();
-            return;
-        }
-        
-        // Normal submission flow - Netlify handles reCAPTCHA automatically
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Submitting...';
-        submitBtn.disabled = true;
-        
-        // Re-enable after a short delay in case submission fails
-        setTimeout(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 5000);
-    });
 }
