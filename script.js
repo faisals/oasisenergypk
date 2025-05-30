@@ -36,11 +36,15 @@ function setRandomHeadline() {
             <span class="text-oasis-green">${randomHeadline.highlight}</span> 
             ${randomHeadline.suffix}
         `;
+    } else {
+        console.warn('Hero headline element not found');
     }
 }
 
-// Set random headline immediately
-setRandomHeadline();
+// Set random headline when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    setRandomHeadline();
+});
 
 // Mobile menu toggle
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
