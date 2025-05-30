@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Oasis Energy Karachi</title>
+    <meta name="description" content="Thank you for your solar quote request. Our team will contact you within 24 hours with a customized solar solution.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'oasis-blue': '#1e40af',
+                        'oasis-green': '#059669',
+                        'oasis-orange': '#ea580c'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-gray-800">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-oasis-green rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">O</span>
+                </div>
+                <h1 class="text-xl font-bold text-oasis-blue">Oasis Energy</h1>
+                <span class="text-sm text-gray-600">Karachi</span>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="/#services" class="text-gray-700 hover:text-oasis-blue transition">Services</a>
+                <a href="/#why-choose" class="text-gray-700 hover:text-oasis-blue transition">Why Choose Us</a>
+                <a href="/#process" class="text-gray-700 hover:text-oasis-blue transition">How It Works</a>
+                <a href="/#contact" class="bg-oasis-green text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Get Quote</a>
+            </nav>
+            <button class="md:hidden" id="mobile-menu-btn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-4 py-2 space-y-2">
+                <a href="/#services" class="block py-2 text-gray-700">Services</a>
+                <a href="/#why-choose" class="block py-2 text-gray-700">Why Choose Us</a>
+                <a href="/#process" class="block py-2 text-gray-700">How It Works</a>
+                <a href="/#contact" class="block py-2 bg-oasis-green text-white px-4 rounded-lg">Get Quote</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Thank You Section -->
+    <section class="py-16 lg:py-24 bg-gradient-to-r from-green-50 to-blue-50 min-h-screen flex items-center">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <!-- Success Icon -->
+                <div class="w-24 h-24 bg-oasis-green rounded-full flex items-center justify-center mx-auto mb-8">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+
+                <!-- Thank You Message -->
+                <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+                    Thank You!
+                </h1>
+                <h2 class="text-2xl lg:text-3xl font-semibold text-oasis-green mb-8">
+                    Your Solar Quote Request Has Been Received
+                </h2>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg mb-8 max-w-2xl mx-auto">
+                    <p class="text-xl text-gray-700 mb-6">
+                        We've received your solar assessment form and our expert team is already reviewing your energy requirements.
+                    </p>
+                    
+                    <!-- What Happens Next -->
+                    <div class="text-left space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">What happens next:</h3>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-oasis-blue rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-white font-bold text-sm">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Quick Response</h4>
+                                <p class="text-gray-600">Our team will contact you within 24 hours to discuss your requirements</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-oasis-green rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-white font-bold text-sm">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Site Assessment</h4>
+                                <p class="text-gray-600">We'll schedule a free on-site visit to evaluate your property's solar potential</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-oasis-orange rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <span class="text-white font-bold text-sm">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Custom Proposal</h4>
+                                <p class="text-gray-600">Receive a detailed quote with system design, savings projections, and financing options</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="bg-oasis-blue text-white p-6 rounded-xl mb-8">
+                    <h3 class="text-xl font-semibold mb-4">Need immediate assistance?</h3>
+                    <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-8">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            <span>+92-XXX-XXXXXXX</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>info@oasisenergypk.com</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/" class="bg-oasis-green text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition">
+                        Return to Homepage
+                    </a>
+                    <a href="/#why-choose" class="border-2 border-oasis-blue text-oasis-blue px-8 py-4 rounded-lg text-lg font-semibold hover:bg-oasis-blue hover:text-white transition">
+                        Learn More About Us
+                    </a>
+                </div>
+
+                <!-- Social Proof -->
+                <div class="mt-12 text-center">
+                    <p class="text-gray-600 mb-4">Join hundreds of satisfied customers in Karachi who have made the switch to solar</p>
+                    <div class="flex justify-center items-center space-x-2">
+                        <div class="flex text-yellow-400">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-gray-600 ml-2">Trusted by Karachi homeowners and businesses</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-oasis-green rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">O</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Oasis Energy</h3>
+                        <span class="text-sm text-gray-400">Karachi</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Your trusted local solar energy partner in Karachi, Pakistan.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Residential Solar</li>
+                        <li>Commercial Solar</li>
+                        <li>Industrial Solar</li>
+                        <li>Net Metering</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/#why-choose" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="/#process" class="hover:text-white transition">How It Works</a></li>
+                        <li><a href="/#why-choose" class="hover:text-white transition">Why Choose Us</a></li>
+                        <li><a href="/#contact" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p>+92-XXX-XXXXXXX</p>
+                        <p>info@oasisenergypk.com</p>
+                        <p>Karachi, Pakistan</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Oasis Energy (Karachi). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+</body>
+</html>
