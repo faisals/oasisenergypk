@@ -226,6 +226,11 @@ function updateStepIndicators(step) {
     // Update step indicators
     for (let i = 1; i <= totalSteps; i++) {
         const indicator = document.getElementById(`step-${i}-indicator`);
+        if (!indicator) {
+            console.warn(`Step indicator step-${i}-indicator not found`);
+            continue;
+        }
+        
         const circle = indicator.querySelector('div');
         const text = indicator.querySelector('span');
         const progressLine = document.getElementById(`progress-${i}-${i+1}`);
@@ -257,18 +262,26 @@ function showStep(step) {
     // Hide all steps
     for (let i = 1; i <= totalSteps; i++) {
         const stepElement = document.getElementById(`step-${i}`);
-        stepElement.classList.add('hidden');
+        if (stepElement) {
+            stepElement.classList.add('hidden');
+        } else {
+            console.warn(`Step element step-${i} not found`);
+        }
     }
     
     // Show current step
     const currentStepElement = document.getElementById(`step-${step}`);
-    currentStepElement.classList.remove('hidden');
-    
-    // Update indicators
-    updateStepIndicators(step);
-    
-    // Scroll to top of form
-    currentStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (currentStepElement) {
+        currentStepElement.classList.remove('hidden');
+        
+        // Update indicators
+        updateStepIndicators(step);
+        
+        // Scroll to top of form
+        currentStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        console.error(`Current step element step-${step} not found`);
+    }
 }
 
 function validateStep(step) {
