@@ -313,6 +313,9 @@ function validateStep(step) {
 
 // Navigation handlers
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize wizard - show step 1 by default
+    showStep(1);
+    
     // Next to step 2
     const nextToStep2 = document.getElementById('next-to-step-2');
     if (nextToStep2) {
