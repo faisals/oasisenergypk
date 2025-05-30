@@ -388,42 +388,129 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-8 rounded-xl shadow-2xl">
+                <div class="bg-white p-8 rounded-xl shadow-2xl max-h-96 overflow-y-auto">
                     <h3 class="text-2xl font-bold text-gray-900 mb-6">Get Your Free Solar Quote</h3>
-                    <form class="space-y-4">
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Name *</label>
-                                <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                    <form class="space-y-6" name="solar-quote" method="POST" data-netlify="true" data-netlify-recaptcha="true">
+                        
+                        <!-- Billing Details Section -->
+                        <div class="border-b border-gray-200 pb-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">1. Billing Details</h4>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Meter Type</label>
+                                    <div class="flex space-x-4">
+                                        <label class="flex items-center">
+                                            <input type="radio" name="meter-type" value="single-phase" class="text-oasis-green focus:ring-oasis-green">
+                                            <span class="ml-2 text-sm text-gray-700">Single Phase</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="radio" name="meter-type" value="three-phase" class="text-oasis-green focus:ring-oasis-green">
+                                            <span class="ml-2 text-sm text-gray-700">Three Phase</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Average electricity bill (per month)</label>
+                                        <input type="number" name="avg-bill" placeholder="PKR" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Average electricity units (per month)</label>
+                                        <input type="number" name="avg-units" placeholder="kWh" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+
+                        <!-- Load Calculator Section -->
+                        <div class="border-b border-gray-200 pb-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">2. Load Calculator</h4>
+                            <p class="text-sm text-gray-600 mb-4">Number of units for each appliance:</p>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">LED Bulbs</label>
+                                    <input type="number" name="led-bulbs" min="0" placeholder="0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Tube Lights</label>
+                                    <input type="number" name="tube-lights" min="0" placeholder="0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Fans</label>
+                                    <input type="number" name="fans" min="0" placeholder="0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Refrigerators</label>
+                                    <input type="number" name="refrigerators" min="0" placeholder="0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">AC 1 Ton</label>
+                                    <input type="number" name="ac-1-ton" min="0" placeholder="0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">AC 1.5 Ton</label>
+                                    <input type="number" name="ac-1-5-ton" min="0" placeholder="0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">AC 2 Ton</label>
+                                    <input type="number" name="ac-2-ton" min="0" placeholder="0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">UPS</label>
+                                    <input type="number" name="ups" min="0" placeholder="0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Motor (HP)</label>
+                                    <input type="number" name="motor-hp" min="0" step="0.5" placeholder="0" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">3. Contact Information</h4>
+                            
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
-                                <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                                <input type="text" name="full-name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone * (e.g. 03331111222)</label>
+                                <input type="tel" name="phone" required pattern="[0-9]{11}" placeholder="03331111222" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">House Area (Marlas)</label>
+                                <input type="number" name="house-area" min="0" step="0.5" placeholder="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                                <textarea name="address" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent" placeholder="Street address, area, Karachi"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Google Maps Location</label>
+                                <input type="url" name="google-maps" placeholder="https://maps.google.com/..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
                             </div>
                         </div>
                         
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
-                            <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Customer Type *</label>
-                            <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent">
-                                <option value="">Select an option</option>
-                                <option value="residential">Residential</option>
-                                <option value="commercial">Commercial</option>
-                                <option value="industrial">Industrial</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-oasis-green focus:border-transparent" placeholder="Tell us about your energy needs..."></textarea>
+                        <!-- reCAPTCHA -->
+                        <div class="flex justify-center">
+                            <div data-netlify-recaptcha="true"></div>
                         </div>
                         
                         <button type="submit" class="w-full bg-oasis-green text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition">
-                            Request Free Consultation
+                            Get Free Solar Quote
                         </button>
                     </form>
                 </div>

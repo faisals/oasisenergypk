@@ -20,24 +20,19 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Form submission handler
-const contactForm = document.querySelector('#contact form');
+const contactForm = document.querySelector('#contact form[name="solar-quote"]');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Add visual feedback
+        // Netlify will handle the actual submission
         const submitBtn = this.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
+        submitBtn.textContent = 'Submitting...';
         submitBtn.disabled = true;
         
-        // Reset after 2 seconds (replace with actual form submission)
+        // Re-enable after a short delay in case submission fails
         setTimeout(() => {
-            submitBtn.textContent = 'Thank you! We\'ll contact you soon.';
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                this.reset();
-            }, 3000);
-        }, 2000);
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }, 5000);
     });
 }
