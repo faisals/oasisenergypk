@@ -4,15 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a minimal project for Oasis Energy PK containing only image assets. Currently, the repository consists of:
-- 5 carousel images in the `/imgs/` directory (carousel-01.jpeg through carousel-05.jpeg)
+Landing page for Oasis Energy.
+This will be a landing page in the following stack:
+- Plain HTML5
+- Tailwind CDN for styling
+- A 15-line vanilla JS file for UX sugar
+- Will be hosted on Netlify with a custom domain
+- Forms	Netlify Forms (automatic detection)
+- E‑mail alerts	Netlify “Form notifications” 
+- Custom domain	Bring your domain, delegate DNS to Netlify or leave DNS where it is and add an A+CNAME record
 
 ## Development Notes
 
-As this project currently contains only image assets with no code, configuration files, or build system, there are no specific commands or architecture to document at this time.
+As this project uses plain HTML with Tailwind CDN, there are no build steps required. Simply open the HTML files in a browser for local development.
 
-When the project expands to include actual application code, this file should be updated with:
-- Build and development commands
-- Project architecture and structure
-- Testing procedures
-- Deployment processes
+## Deployment
+
+The site is configured for deployment on Netlify with a custom domain (oasisenergypk.com).
