@@ -1,3 +1,47 @@
+// Random headline rotation
+const headlines = [
+    {
+        text: "Reliable Solar Power for Your",
+        highlight: "Home & Business",
+        suffix: "in Karachi"
+    },
+    {
+        text: "Solar Lagao,",
+        highlight: "Garmi Bhagao",
+        suffix: ""
+    },
+    {
+        text: "Bijli Bhi, Thunnd Bhi,",
+        highlight: "Bachat Bhi",
+        suffix: ""
+    },
+    {
+        text: "Karachi Ki Dhoop,",
+        highlight: "Aap ka Munafa",
+        suffix: ""
+    },
+    {
+        text: "Bill Kam,",
+        highlight: "Mazah Zyada",
+        suffix: ""
+    }
+];
+
+function setRandomHeadline() {
+    const headlineElement = document.getElementById('hero-headline');
+    if (headlineElement) {
+        const randomHeadline = headlines[Math.floor(Math.random() * headlines.length)];
+        headlineElement.innerHTML = `
+            ${randomHeadline.text} 
+            <span class="text-oasis-green">${randomHeadline.highlight}</span> 
+            ${randomHeadline.suffix}
+        `;
+    }
+}
+
+// Set random headline immediately
+setRandomHeadline();
+
 // Mobile menu toggle
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
