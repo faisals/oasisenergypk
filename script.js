@@ -170,6 +170,146 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Multi-step form wizard
+let currentStep = 1;
+const totalSteps = 3;
+
+function updateStepIndicators(step) {
+    // Update step indicators
+    for (let i = 1; i <= totalSteps; i++) {
+        const indicator = document.getElementById(`step-${i}-indicator`);
+        const circle = indicator.querySelector('div');
+        const text = indicator.querySelector('span');
+        const progressLine = document.getElementById(`progress-${i}-${i+1}`);
+        
+        if (i < step) {
+            // Completed step
+            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-oasis-green text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
+            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-oasis-green';
+            if (progressLine) progressLine.className = 'w-8 sm:w-12 h-0.5 bg-oasis-green';
+        } else if (i === step) {
+            // Current step
+            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-oasis-blue text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
+            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-oasis-blue';
+        } else {
+            // Future step
+            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
+            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-gray-500';
+            if (progressLine) progressLine.className = 'w-8 sm:w-12 h-0.5 bg-gray-300';
+        }
+    }
+    
+    // Update progress bar
+    const progressBar = document.getElementById('progress-bar');
+    const progressPercentage = (step / totalSteps) * 100;
+    progressBar.style.width = `${progressPercentage}%`;
+}
+
+function showStep(step) {
+    // Hide all steps
+    for (let i = 1; i <= totalSteps; i++) {
+        const stepElement = document.getElementById(`step-${i}`);
+        stepElement.classList.add('hidden');
+    }
+    
+    // Show current step
+    const currentStepElement = document.getElementById(`step-${step}`);
+    currentStepElement.classList.remove('hidden');
+    
+    // Update indicators
+    updateStepIndicators(step);
+    
+    // Scroll to top of form
+    currentStepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function validateStep(step) {
+    switch(step) {
+        case 1:
+            const meterType = document.querySelector('input[name="meter-type"]:checked');
+            const avgBill = document.querySelector('input[name="avg-bill"]').value;
+            const avgUnits = document.querySelector('input[name="avg-units"]').value;
+            
+            if (!meterType) {
+                alert('Please select your meter type');
+                return false;
+            }
+            if (!avgBill || avgBill <= 0) {
+                alert('Please enter your average electricity bill');
+                return false;
+            }
+            if (!avgUnits || avgUnits <= 0) {
+                alert('Please enter your average electricity units');
+                return false;
+            }
+            return true;
+            
+        case 2:
+            // Step 2 is optional - appliance count
+            return true;
+            
+        case 3:
+            const fullName = document.querySelector('input[name="full-name"]').value;
+            const phone = document.querySelector('input[name="phone"]').value;
+            
+            if (!fullName || fullName.trim() === '') {
+                alert('Please enter your full name');
+                return false;
+            }
+            if (!phone || phone.trim() === '') {
+                alert('Please enter your phone number');
+                return false;
+            }
+            return true;
+            
+        default:
+            return true;
+    }
+}
+
+// Navigation handlers
+document.addEventListener('DOMContentLoaded', function() {
+    // Next to step 2
+    const nextToStep2 = document.getElementById('next-to-step-2');
+    if (nextToStep2) {
+        nextToStep2.addEventListener('click', function() {
+            if (validateStep(1)) {
+                currentStep = 2;
+                showStep(currentStep);
+            }
+        });
+    }
+    
+    // Next to step 3
+    const nextToStep3 = document.getElementById('next-to-step-3');
+    if (nextToStep3) {
+        nextToStep3.addEventListener('click', function() {
+            if (validateStep(2)) {
+                currentStep = 3;
+                showStep(currentStep);
+            }
+        });
+    }
+    
+    // Back to step 1
+    const backToStep1 = document.getElementById('back-to-step-1');
+    if (backToStep1) {
+        backToStep1.addEventListener('click', function() {
+            currentStep = 1;
+            showStep(currentStep);
+        });
+    }
+    
+    // Back to step 2
+    const backToStep2 = document.getElementById('back-to-step-2');
+    if (backToStep2) {
+        backToStep2.addEventListener('click', function() {
+            currentStep = 2;
+            showStep(currentStep);
+        });
+    }
+});
+
 // Form submission handler with reCAPTCHA
 const contactForm = document.querySelector('#contact form[name="solar-quote"]');
 if (contactForm) {
