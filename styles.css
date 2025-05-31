@@ -867,6 +867,12 @@ img:hover {
     h2 { font-size: 2rem; }
     h3 { font-size: 1.5rem; }
     
+    /* Hero headline mobile override */
+    #hero-headline {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+    
     .animate-fadeIn,
     .animate-slideInLeft,
     .animate-slideInRight,
