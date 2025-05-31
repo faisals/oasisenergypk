@@ -277,7 +277,7 @@ body {
 .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
 .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
 .text-2xl { font-size: 1.5rem; line-height: 2rem; }
-.text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+.text-4xl { font-size: 2.25rem; line-height: 1.4; }
 
 .font-bold { font-weight: 700; }
 .font-medium { font-weight: 500; }
@@ -290,7 +290,12 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;
 }
 
-h1 { font-size: 3.5rem; line-height: 1.1; }
+h1 { font-size: 3.5rem; line-height: 1.3; }
+
+/* Hero headline specific fix */
+#hero-headline {
+    line-height: 1.4 !important;
+}
 h2 { font-size: 2.5rem; line-height: 1.2; }
 h3 { font-size: 1.875rem; line-height: 1.3; }
 h4 { font-size: 1.5rem; line-height: 1.4; }
@@ -656,7 +661,7 @@ input[type="radio"]:focus, input[type="checkbox"]:focus {
     .lg\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
     .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
     .lg\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
-    .lg\:text-6xl { font-size: 3.75rem; }
+    .lg\:text-6xl { font-size: 3.75rem; line-height: 1.3; }
     .lg\:text-3xl { font-size: 1.875rem; }
     .lg\:py-24 { padding-top: 6rem; padding-bottom: 6rem; }
 }
