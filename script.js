@@ -54,17 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scrolling for navigation links
+    // Navigation link click handler (for mobile menu closing)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                // Close mobile menu if open
-                if (mobileMenu) {
-                    mobileMenu.classList.add('hidden');
-                }
+            // Let the browser handle the smooth scrolling via CSS
+            // Just close mobile menu if open
+            if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
             }
         });
     });
