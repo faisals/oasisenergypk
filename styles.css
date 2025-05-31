@@ -343,6 +343,7 @@ h6 { font-size: 1.125rem; line-height: 1.5; }
 /* Additional color shades */
 .bg-green-700 { background-color: #15803d; }
 .bg-blue-700 { background-color: #1d4ed8; }
+.bg-blue-800 { background-color: #1e40af; }
 .bg-orange-700 { background-color: #c2410c; }
 
 /* Gradients */
