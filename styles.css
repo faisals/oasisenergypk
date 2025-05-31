@@ -822,25 +822,9 @@ input[type="radio"]:focus, input[type="checkbox"]:focus {
     outline-offset: 2px;
 }
 
-/* Improve link underlines */
-a:not(.btn) {
-    position: relative;
+/* Remove link underlines */
+a {
     text-decoration: none;
-}
-
-a:not(.btn)::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: currentColor;
-    transition: width 0.3s ease;
-}
-
-a:not(.btn):hover::after {
-    width: 100%;
 }
 
 /* Premium hover state for images */
