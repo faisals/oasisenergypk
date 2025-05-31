@@ -348,13 +348,13 @@ h6 { font-size: 1.125rem; line-height: 1.5; }
 
 /* Gradients */
 .bg-gradient-to-r {
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via, var(--tw-gradient-to));
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
     background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
 
 .from-blue-50 {
     --tw-gradient-from: #eff6ff;
-    --tw-gradient-to: rgba(239, 246, 255, 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(239, 246, 255, 0));
 }
 
 .to-green-50 {
@@ -363,7 +363,7 @@ h6 { font-size: 1.125rem; line-height: 1.5; }
 
 .from-oasis-blue {
     --tw-gradient-from: var(--oasis-blue);
-    --tw-gradient-to: rgba(30, 64, 175, 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(30, 64, 175, 0));
 }
 
 .to-oasis-green {
@@ -372,19 +372,19 @@ h6 { font-size: 1.125rem; line-height: 1.5; }
 
 /* Via gradient colors for three-stop gradients */
 .via-blue-100 {
-    --tw-gradient-via: #dbeafe;
+    --tw-gradient-stops: var(--tw-gradient-from), #dbeafe, var(--tw-gradient-to);
 }
 
 .via-green-100 {
-    --tw-gradient-via: #d1fae5;
+    --tw-gradient-stops: var(--tw-gradient-from), #d1fae5, var(--tw-gradient-to);
 }
 
 .via-oasis-blue {
-    --tw-gradient-via: var(--oasis-blue);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--oasis-blue), var(--tw-gradient-to);
 }
 
 .via-oasis-green {
-    --tw-gradient-via: var(--oasis-green);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--oasis-green), var(--tw-gradient-to);
 }
 
 /* Borders */
