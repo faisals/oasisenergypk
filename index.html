@@ -376,7 +376,7 @@
             
             <div class="max-w-4xl mx-auto">
                 <div class="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-2xl">
-                    <form class="space-y-8" name="solar-quote" method="POST" action="/thank-you.html" data-netlify="true" data-netlify-recaptcha="true" data-netlify-honeypot="bot-field">
+                    <form class="space-y-8" name="solar-quote" method="POST" action="/thank-you.html" data-netlify="true" data-netlify-honeypot="bot-field">
                         <input type="hidden" name="form-name" value="solar-quote">
                         <p class="hidden">
                             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -616,7 +616,8 @@
                             </div>
                             </div>
                             
-                            <!-- reCAPTCHA will be auto-injected by Netlify via data-netlify-recaptcha="true" attribute -->
+                            <!-- Netlify reCAPTCHA widget -->
+                            <div data-netlify-recaptcha="true" class="flex justify-center my-6"></div>
                             
                             <div class="flex justify-center pt-6">
                                 <button type="submit" id="submit-btn" class="bg-oasis-green text-white px-12 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition">
