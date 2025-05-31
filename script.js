@@ -300,18 +300,18 @@ function initializeFormSubmission() {
                 return;
             }
             
+            // Log submission for debugging
+            console.log('Form is being submitted to Netlify...');
+            
             // Normal submission flow
             if (submitBtn) {
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'Submitting...';
                 submitBtn.disabled = true;
-                
-                // Re-enable after a short delay in case submission fails
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }, 5000);
             }
+            
+            // Let the form submit naturally to Netlify
+            // Don't re-enable button as page will redirect on success
         });
     }
 }
