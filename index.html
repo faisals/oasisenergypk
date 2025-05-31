@@ -5,31 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oasis Energy - Reliable Solar Power Solutions in Karachi, Pakistan</title>
     <meta name="description" content="Leading solar energy provider in Karachi offering residential, commercial & industrial solar solutions. Beat load shedding with reliable solar power.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Suppress Tailwind CDN warning for this single-page production site
-        if (typeof console !== 'undefined' && console.warn) {
-            const originalWarn = console.warn;
-            console.warn = function(...args) {
-                if (args[0] && args[0].includes && args[0].includes('cdn.tailwindcss.com should not be used in production')) {
-                    return;
-                }
-                originalWarn.apply(console, args);
-            };
-        }
-        
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'oasis-blue': '#1e40af',
-                        'oasis-green': '#059669',
-                        'oasis-orange': '#ea580c'
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-white text-gray-800">
     <!-- Header -->
