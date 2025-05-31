@@ -3,6 +3,13 @@
 # Create a temporary file to store the combined content
 temp_file=$(mktemp)
 
+# Add styles.css
+echo "=== FILE: styles.css ===" >> "$temp_file"
+echo "" >> "$temp_file"
+cat styles.css >> "$temp_file"
+echo "" >> "$temp_file"
+echo "" >> "$temp_file"
+
 # Add script.js
 echo "=== FILE: script.js ===" >> "$temp_file"
 echo "" >> "$temp_file"
@@ -45,6 +52,7 @@ fi
 rm "$temp_file"
 
 echo "The following files have been copied to clipboard:"
+echo "- styles.css"
 echo "- script.js"
 echo "- index.html" 
 echo "- thank-you.html"
