@@ -30,21 +30,6 @@
             }
         }
     </script>
-    <style>
-        .step-content {
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .step-content.hidden {
-            opacity: 0;
-            display: none;
-        }
-        /* Explicitly set visibility when not hidden */
-        .step-content:not(.hidden) {
-            opacity: 1;
-            display: block;
-        }
-    </style>
 </head>
 <body class="bg-white text-gray-800">
     <!-- Header -->
@@ -391,39 +376,14 @@
             
             <div class="max-w-4xl mx-auto">
                 <div class="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-2xl">
-                    <!-- Step Progress Indicator -->
-                    <div class="mb-8">
-                        <div class="flex justify-center items-center mb-4 overflow-x-auto">
-                            <div class="flex items-center space-x-2 sm:space-x-4 min-w-max">
-                                <div id="step-1-indicator" class="flex items-center">
-                                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-oasis-blue text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</div>
-                                    <span class="ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-oasis-blue">Usage</span>
-                                </div>
-                                <div class="w-8 sm:w-12 h-0.5 bg-gray-300" id="progress-1-2"></div>
-                                <div id="step-2-indicator" class="flex items-center">
-                                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">2</div>
-                                    <span class="ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-gray-500">Load</span>
-                                </div>
-                                <div class="w-8 sm:w-12 h-0.5 bg-gray-300" id="progress-2-3"></div>
-                                <div id="step-3-indicator" class="flex items-center">
-                                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">3</div>
-                                    <span class="ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-gray-500">Contact</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div id="progress-bar" class="bg-oasis-green h-2 rounded-full transition-all duration-300" style="width: 33.33%"></div>
-                        </div>
-                    </div>
-
                     <form class="space-y-8" name="solar-quote" method="POST" action="/thank-you.html" data-netlify="true" data-netlify-recaptcha="true">
                         <input type="hidden" name="form-name" value="solar-quote">
                         
-                        <!-- Step 1: Usage (Electricity Profile) -->
-                        <div id="step-1" class="step-content">
+                        <!-- Section 1: Usage (Electricity Profile) -->
+                        <div>
                             <div class="text-center mb-6">
-                                <h3 class="text-2xl font-bold text-gray-900 mb-2">Tell us about your electricity usage</h3>
-                                <p class="text-gray-600">This helps us size your solar system correctly</p>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">Tell us about your electricity needs</h3>
+                                <p class="text-gray-600">Complete the form below to receive your customized solar quote</p>
                             </div>
                             
                             <div class="bg-blue-50 rounded-lg p-6 border border-blue-100 space-y-6">
@@ -464,16 +424,10 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="flex justify-end pt-6">
-                                <button type="button" id="next-to-step-2" class="bg-oasis-blue text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-                                    Next: Load Details →
-                                </button>
-                            </div>
                         </div>
 
-                        <!-- Step 2: Load (Appliance Count) -->
-                        <div id="step-2" class="step-content hidden">
+                        <!-- Section 2: Load (Appliance Count) -->
+                        <div>
                             <div class="text-center mb-6">
                                 <h3 class="text-2xl font-bold text-gray-900 mb-2">What appliances will you power?</h3>
                                 <p class="text-gray-600">Help us calculate your energy load requirements</p>
@@ -598,19 +552,10 @@
                                     <p class="text-sm text-gray-500 mt-1">Total horsepower of motors</p>
                                 </div>
                             </div>
-                            
-                            <div class="flex justify-between pt-6">
-                                <button type="button" id="back-to-step-1" class="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition">
-                                    ← Back: Usage
-                                </button>
-                                <button type="button" id="next-to-step-3" class="bg-oasis-green text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
-                                    Next: Contact Details →
-                                </button>
-                            </div>
                         </div>
 
-                        <!-- Step 3: Contact -->
-                        <div id="step-3" class="step-content hidden">
+                        <!-- Section 3: Contact -->
+                        <div>
                             <div class="text-center mb-6">
                                 <h3 class="text-2xl font-bold text-gray-900 mb-2">Let's get in touch</h3>
                                 <p class="text-gray-600">We'll prepare your customized solar quote</p>
@@ -670,11 +615,8 @@
                             
                             <!-- reCAPTCHA will be auto-injected by Netlify via data-netlify-recaptcha="true" attribute -->
                             
-                            <div class="flex justify-between pt-6">
-                                <button type="button" id="back-to-step-2" class="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition">
-                                    ← Back: Load Details
-                                </button>
-                                <button type="submit" id="submit-btn" class="bg-oasis-green text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                            <div class="flex justify-center pt-6">
+                                <button type="submit" id="submit-btn" class="bg-oasis-green text-white px-12 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition">
                                     Get Free Solar Quote
                                 </button>
                             </div>

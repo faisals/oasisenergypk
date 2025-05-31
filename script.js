@@ -69,10 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Multi-step form wizard (only if on the page with the form)
+    // Initialize form functionality (only if on the page with the form)
     const contactForm = document.querySelector('#contact form[name="solar-quote"]');
     if (contactForm) {
-        initializeFormWizard();
         initializeSteppers();
         initializePhoneInput();
         initializeLocationButton();
@@ -80,180 +79,46 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Multi-step form wizard functions
-let currentStep = 1;
-const totalSteps = 3;
-const enableScrollOnStepChange = true; // Set to false to debug scrolling issues
-
-function initializeFormWizard() {
-    // Show step 1 by default
-    showStep(1);
+// Form validation function
+function validateForm() {
+    // Validate electricity usage fields
+    const meterType = document.querySelector('input[name="meter-type"]:checked');
+    const avgBillInput = document.querySelector('input[name="avg-bill"]');
+    const avgUnitsInput = document.querySelector('input[name="avg-units"]');
     
-    // Next to step 2
-    const nextToStep2 = document.getElementById('next-to-step-2');
-    if (nextToStep2) {
-        nextToStep2.addEventListener('click', function() {
-            if (validateStep(1)) {
-                currentStep = 2;
-                showStep(currentStep);
-            }
-        });
+    if (!meterType) {
+        alert('Please select your meter type');
+        return false;
     }
-    
-    // Next to step 3
-    const nextToStep3 = document.getElementById('next-to-step-3');
-    if (nextToStep3) {
-        nextToStep3.addEventListener('click', function() {
-            if (validateStep(2)) {
-                currentStep = 3;
-                showStep(currentStep);
-            }
-        });
+    if (!avgBillInput || !avgBillInput.value || parseFloat(avgBillInput.value) <= 0) {
+        alert('Please enter your average electricity bill');
+        return false;
+    }
+    if (!avgUnitsInput || !avgUnitsInput.value || parseFloat(avgUnitsInput.value) <= 0) {
+        alert('Please enter your average electricity units');
+        return false;
     }
     
-    // Back to step 1
-    const backToStep1 = document.getElementById('back-to-step-1');
-    if (backToStep1) {
-        backToStep1.addEventListener('click', function() {
-            currentStep = 1;
-            showStep(currentStep);
-        });
+    // Validate contact fields
+    const fullNameInput = document.querySelector('input[name="full-name"]');
+    const phoneInput = document.querySelector('input[name="phone"]');
+    
+    if (!fullNameInput || !fullNameInput.value || fullNameInput.value.trim() === '') {
+        alert('Please enter your full name');
+        return false;
+    }
+    if (!phoneInput || !phoneInput.value || phoneInput.value.trim() === '') {
+        alert('Please enter your phone number');
+        return false;
+    }
+    // Basic phone validation - more flexible pattern
+    const phoneValue = phoneInput.value.replace(/\D/g, ''); // Remove all non-digits
+    if (!phoneValue.startsWith('03') || phoneValue.length !== 11) {
+        alert('Please enter a valid Pakistani mobile number (03xx-xxxxxxx)');
+        return false;
     }
     
-    // Back to step 2
-    const backToStep2 = document.getElementById('back-to-step-2');
-    if (backToStep2) {
-        backToStep2.addEventListener('click', function() {
-            currentStep = 2;
-            showStep(currentStep);
-        });
-    }
-}
-
-function updateStepIndicators(step) {
-    // Update step indicators
-    for (let i = 1; i <= totalSteps; i++) {
-        const indicator = document.getElementById(`step-${i}-indicator`);
-        if (!indicator) continue;
-        
-        const circle = indicator.querySelector('div');
-        const text = indicator.querySelector('span');
-        
-        // Guard against missing elements
-        if (!circle || !text) continue;
-        
-        // Only look for progress line if not the last step
-        const progressLine = i < totalSteps ? document.getElementById(`progress-${i}-${i+1}`) : null;
-        
-        if (i < step) {
-            // Completed step
-            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-oasis-green text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
-            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-oasis-green';
-            if (progressLine) progressLine.className = 'w-8 sm:w-12 h-0.5 bg-oasis-green';
-        } else if (i === step) {
-            // Current step
-            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-oasis-blue text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
-            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-oasis-blue';
-        } else {
-            // Future step
-            circle.className = 'w-8 h-8 sm:w-10 sm:h-10 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold';
-            text.className = 'ml-1 sm:ml-2 text-xs sm:text-sm font-medium text-gray-500';
-            if (progressLine) progressLine.className = 'w-8 sm:w-12 h-0.5 bg-gray-300';
-        }
-    }
-    
-    // Update progress bar
-    const progressBar = document.getElementById('progress-bar');
-    if (progressBar) {
-        const progressPercentage = (step / totalSteps) * 100;
-        progressBar.style.width = `${progressPercentage}%`;
-    }
-}
-
-function showStep(step) {
-    try {
-        // Hide all steps
-        for (let i = 1; i <= totalSteps; i++) {
-            const stepElement = document.getElementById(`step-${i}`);
-            if (stepElement) {
-                stepElement.classList.add('hidden');
-            }
-        }
-        
-        // Show current step
-        const currentStepElement = document.getElementById(`step-${step}`);
-        if (currentStepElement) {
-            currentStepElement.classList.remove('hidden');
-            
-            // Update indicators
-            updateStepIndicators(step);
-            
-            // Scroll to form container instead of step element to avoid positioning issues
-            // Only scroll on step changes after the first step
-            if (enableScrollOnStepChange && step > 1) {
-                setTimeout(() => {
-                    const formContainer = document.querySelector('#contact .bg-white.rounded-xl');
-                    if (formContainer) {
-                        formContainer.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
-                    }
-                }, 100);
-            }
-        } else {
-            console.error(`Step element not found: step-${step}`);
-        }
-    } catch (error) {
-        console.error('Error in showStep:', error);
-    }
-}
-
-function validateStep(step) {
-    switch(step) {
-        case 1:
-            const meterType = document.querySelector('input[name="meter-type"]:checked');
-            const avgBillInput = document.querySelector('input[name="avg-bill"]');
-            const avgUnitsInput = document.querySelector('input[name="avg-units"]');
-            
-            if (!meterType) {
-                alert('Please select your meter type');
-                return false;
-            }
-            if (!avgBillInput || !avgBillInput.value || parseFloat(avgBillInput.value) <= 0) {
-                alert('Please enter your average electricity bill');
-                return false;
-            }
-            if (!avgUnitsInput || !avgUnitsInput.value || parseFloat(avgUnitsInput.value) <= 0) {
-                alert('Please enter your average electricity units');
-                return false;
-            }
-            return true;
-            
-        case 2:
-            // Step 2 is optional - appliance count
-            return true;
-            
-        case 3:
-            const fullNameInput = document.querySelector('input[name="full-name"]');
-            const phoneInput = document.querySelector('input[name="phone"]');
-            
-            if (!fullNameInput || !fullNameInput.value || fullNameInput.value.trim() === '') {
-                alert('Please enter your full name');
-                return false;
-            }
-            if (!phoneInput || !phoneInput.value || phoneInput.value.trim() === '') {
-                alert('Please enter your phone number');
-                return false;
-            }
-            // Basic phone validation - more flexible pattern
-            const phoneValue = phoneInput.value.replace(/\D/g, ''); // Remove all non-digits
-            if (!phoneValue.startsWith('03') || phoneValue.length !== 11) {
-                alert('Please enter a valid Pakistani mobile number (03xx-xxxxxxx)');
-                return false;
-            }
-            return true;
-            
-        default:
-            return true;
-    }
+    return true;
 }
 
 // Stepper controls for appliance counts
@@ -426,33 +291,16 @@ function initializeLocationButton() {
 function initializeFormSubmission() {
     const contactForm = document.querySelector('#contact form[name="solar-quote"]');
     if (contactForm) {
-        let recaptchaShown = false;
-        
         contactForm.addEventListener('submit', function(e) {
-            const recaptchaContainer = document.getElementById('recaptcha-container');
             const submitBtn = document.getElementById('submit-btn');
             
-            // Validate current step before submission
-            if (!validateStep(3)) {
+            // Validate form before submission
+            if (!validateForm()) {
                 e.preventDefault();
                 return;
             }
             
-            // If reCAPTCHA hasn't been shown yet, show it and prevent submission
-            if (!recaptchaShown && recaptchaContainer) {
-                e.preventDefault();
-                recaptchaContainer.classList.remove('hidden');
-                recaptchaShown = true;
-                if (submitBtn) {
-                    submitBtn.textContent = 'Complete Verification to Submit';
-                }
-                
-                // Scroll to reCAPTCHA for visibility
-                recaptchaContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
-            
-            // Normal submission flow after reCAPTCHA is completed
+            // Normal submission flow
             if (submitBtn) {
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'Submitting...';
