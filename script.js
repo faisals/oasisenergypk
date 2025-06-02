@@ -39,10 +39,85 @@ function setRandomHeadline() {
     }
 }
 
+// Slideshow functionality
+let currentSlideIndex = 1;
+let slideInterval;
+
+function showSlide(n) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (n > slides.length) n = 1;
+    if (n < 1) n = slides.length;
+    
+    currentSlideIndex = n;
+    
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    
+    // Remove active class from all dots
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Show current slide and activate corresponding dot
+    if (slides[n - 1]) {
+        slides[n - 1].classList.add('active');
+    }
+    if (dots[n - 1]) {
+        dots[n - 1].classList.add('active');
+    }
+}
+
+function nextSlide() {
+    showSlide(currentSlideIndex += 1);
+}
+
+function currentSlideClick(n) {
+    showSlide(currentSlideIndex = n);
+    // Reset auto-advance timer when user manually navigates
+    if (slideInterval) {
+        clearInterval(slideInterval);
+        startSlideshow();
+    }
+}
+
+// Global function for onclick handlers
+function currentSlide(n) {
+    currentSlideClick(n);
+}
+
+function startSlideshow() {
+    // Auto-advance every 4 seconds
+    slideInterval = setInterval(nextSlide, 4000);
+}
+
+function initializeSlideshow() {
+    // Start slideshow if slides exist
+    const slides = document.querySelectorAll('.slide');
+    if (slides.length > 0) {
+        showSlide(currentSlideIndex);
+        startSlideshow();
+        
+        // Pause slideshow on hover
+        const slideshowContainer = document.querySelector('.slideshow-container');
+        if (slideshowContainer) {
+            slideshowContainer.addEventListener('mouseenter', () => {
+                if (slideInterval) clearInterval(slideInterval);
+            });
+            
+            slideshowContainer.addEventListener('mouseleave', () => {
+                startSlideshow();
+            });
+        }
+    }
+}
+
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     // Set random headline
     setRandomHeadline();
+    
+    // Initialize slideshow
+    initializeSlideshow();
     
     // Mobile menu toggle
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
